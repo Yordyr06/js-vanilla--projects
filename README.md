@@ -1,3 +1,3 @@
-# js-vanilla-projects
+# js-vanilla--projects
 
 🚧 ⚠ -- Building
