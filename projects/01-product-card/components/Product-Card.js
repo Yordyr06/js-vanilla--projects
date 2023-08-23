@@ -4,7 +4,7 @@ export class ProductCard extends HTMLElement {
     this.attachShadow({ mode: 'open'})
   }
 
-  static get observedAttribute() {
+  static get observedAttributes() {
     return [
       'img',
       'tittle',
@@ -14,21 +14,43 @@ export class ProductCard extends HTMLElement {
     ]
   }
 
+  attributeChangedCallback(attribute, oldValue, newValue) {
+    if (attribute === 'img' && oldValue !== newValue) {
+      this.img = newValue
+    }
+
+    if (attribute === 'tittle') {
+      this.tittle = newValue
+    }
+
+    if (attribute === 'price') {
+      this.price = newValue
+    }
+
+    if (attribute === 'description') {
+      this.description = newValue
+    }
+
+    if (attribute === 'collection') {
+      this.collection = newValue
+    }
+  }
+
   getTemplate() {
     const template = document.createElement('template')
     template.innerHTML = `
       ${this.getStyle()}
       <main class="container">
         <section class="container--img">
-          <img src="" alt/>
+          <img src="${this.img}" alt="Running shoes"/>
         </section>
 
-        <section class="details">
-          <div class="details--content">
-            <h2> Holi </h2>
-            <p></p>
-            <h3></h3>
-            <button>Soy un boton</button>
+        <section class="container--details">
+          <div>
+            <h2>${this.tittle}</h2>
+            <p>${this.description}</p>
+            <h3>${this.price}</h3>
+            <button>Purchase</button>
           </div>
         </section>
       </main>
@@ -41,7 +63,6 @@ export class ProductCard extends HTMLElement {
     return `
       <style>
         :host {
-          --primary-background: #5a6cb2;
           width: 80%;
           max-width: 900px;
           min-width: 280px;
@@ -60,7 +81,7 @@ export class ProductCard extends HTMLElement {
           background-color: #1a1a1a;
         }
 
-        .container .imgBox {
+        .container--img {
           position: relative;
           display: flex;
           justify-content: center;
@@ -69,7 +90,7 @@ export class ProductCard extends HTMLElement {
           background-color: var(--primary-background)
         }
 
-        .container .imgBox:before {
+        .container--img:before {
           position: absolute;
           top: 20px;
           left: 20px;
@@ -80,7 +101,7 @@ export class ProductCard extends HTMLElement {
           opacity: 0.1;
         }
 
-        .container .imgBox img {
+        .container--img img {
           position: relative;
           top: 100px;
           left: -50px;
@@ -89,7 +110,7 @@ export class ProductCard extends HTMLElement {
           transform: rotate(-30deg);
         }
         
-        .container .details {
+        .container--details {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -99,21 +120,21 @@ export class ProductCard extends HTMLElement {
           padding: 40px;
         }
 
-        .container .details h2 {
+        .container--details h2 {
           margin-bottom: 25px;
           font-size: 2.5em;
           line-height: 0.8em;
           color: #444;
         }
 
-        .container .details h2 span {
+        .container--details span {
           font-size: 0.4em;
           text-transform: uppercase;
           letter-spacing: 2px;
           color: #999;
         }
         
-        .container .details p {
+        .container--details p {
           max-width: 85%;
           margin-left: 15%;
           margin-bottom: 35px;
@@ -121,13 +142,13 @@ export class ProductCard extends HTMLElement {
           font-size: 15px;
         }
         
-        .container .details h3 {
+        .container--details h3 {
           float: left;
           font-size: 2.5em;
           color: #a2a2a2;
         }
         
-        .container .details button {
+        .container--details button {
           margin-top: 35px;
           float: right;
           padding: 15px 20px;
@@ -147,7 +168,7 @@ export class ProductCard extends HTMLElement {
             width: auto;
           }
       
-          .container .imgBox {
+          .container--img {
             padding: 40px;
             width: 100%;
             box-sizing: border-box;
@@ -155,20 +176,20 @@ export class ProductCard extends HTMLElement {
             text-align: center;
           }
       
-          .container .imgBox img {
+          .container--img img {
             left: initial;
             width: 100%;
             height: auto;
             transform: rotate(0deg);
           }
 
-          .container .details {
+          .container--details {
             width: 100%;
             height: auto;
             padding: 20px;
           }
 
-          .container .details p {
+          .container--details p {
             max-width: 100%;
             margin-left: 0;
           }
