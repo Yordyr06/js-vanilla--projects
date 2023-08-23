@@ -1,0 +1,42 @@
+export function something () {
+  console.log(`hello world`)
+}
+
+export class ProductCard extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open'})
+  }
+
+  getTemplate() {
+    const template = document.createElement('template')
+    template.innerHTML = `
+      <main>
+        <section>
+          <img />
+        </section>
+
+        <section>
+          <div>
+            <h2> Holi </h2>
+            <p></p>
+            <h3></h3>
+            <button>Soy un boton</button>
+          </div>
+        </section>
+      </main>
+    `
+
+    return template
+  }
+
+  render() {
+    this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true))
+  }
+
+  connectedCallback() {
+    this.render()
+  }
+}
+
+customElements.define('product-card', ProductCard)
